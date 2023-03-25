@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reaction Time Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 50px;
+    }
+
+    #screen {
+      width: 300px;
+      height: 300px;
+      background-color: red;
+      margin: 0 auto;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    #screen:hover {
+      background-color: #80ff80;
+    }
+
+    #result {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    #restart-button {
+      font-size: 18px;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    #restart-button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reaction Time Test</h1>
+  <p>Click the screen when it turns green.</p>
+  <div id="screen" onclick="checkReactionTime()"></div>
+  <p id="result"></p>
+  <button id="restart-button" onclick="restartTest()">Restart Test</button>
+
+  <script>
+    var startTime, endTime;
+    var testRunning = true;
+
+    function getRandomTime(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function showScreen() {
+      var screen = document.getElementById("screen");
+      screen.style.backgroundColor = "#80ff80";
+      startTime = new Date();
+    }
+
+    function hideScreen() {
+      var screen = document.getElementById("screen");
+      screen.style.backgroundColor = "red";
+    }
+
+    function checkReactionTime() {
+      if (testRunning) {
+        endTime = new Date();
+        var reactionTime = (endTime - startTime) / 1000;
+        document.getElementById("result").innerHTML = "Your reaction time was " + reactionTime + " seconds.";
+        testRunning = false;
+      }
+    }
+
+    function restartTest() {
+      testRunning = true;
+      document.getElementById("result").innerHTML = "";
+      setTimeout(function() {
+        hideScreen();
+      }, getRandomTime(1000, 5000));
+
+      setTimeout(function() {
+        showScreen();
+      }, getRandomTime(1000, 5000));
+    }
+
+    setTimeout(function() {
+      hideScreen();
+    }, getRandomTime(1000, 5000));
+
+    setTimeout(function() {
+      showScreen();
+    }, getRandomTime(1000, 5000));
+  </script>
+</body>
+</html>
